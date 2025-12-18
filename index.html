@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russel Jr. B. Cagunot - Full Stack Developer</title>
+    <style>
+        /* RESET & VARIABLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color Palette - Light/Professional */
+            --primary: #2563eb;       /* Royal Blue */
+            --primary-dark: #1e40af;  /* Darker Blue for hovers */
+            --accent: #0ea5e9;        /* Sky Blue */
+            
+            --bg-body: #ffffff;
+            --bg-alt: #f8fafc;        /* Very light slate for alternating sections */
+            --bg-card: #ffffff;
+            
+            --text-main: #0f172a;     /* Almost black for headings */
+            --text-body: #334155;     /* Dark gray for reading text */
+            --text-muted: #64748b;    /* Medium gray for meta info */
+            
+            --border: #e2e8f0;        /* Light gray border */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            color: var(--text-main);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: 0.2s;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: var(--bg-body);
+            overflow: hidden;
+        }
+
+        /* Soft background blobs instead of neon glow */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            z-index: 0;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            z-index: 0;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero .tagline {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin: 0 auto 2.5rem;
+            max-width: 650px;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        /* BUTTONS */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            border-radius: 50px; /* Pill shape */
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* SECTIONS GENERAL */
+        section {
+            padding: 100px 0;
+        }
+
+        section:nth-child(odd) {
+            background: var(--bg-alt); /* Alternating background colors */
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.25rem;
+            margin-bottom: 4rem;
+            color: var(--text-main);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* ABOUT SECTION */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-body);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 0.4rem 0;
+            color: var(--text-body);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-category li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.5rem;
+            line-height: 1;
+            margin-right: 0.5rem;
+        }
+
+        /* PROJECTS SECTION */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* Status Pills - Pastel colors */
+        .project-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-done {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-ongoing {
+            background: #fff7ed;
+            color: #c2410c;
+            border: 1px solid #fed7aa;
+        }
+
+        .status-pending {
+            background: #f3e8ff;
+            color: #7e22ce;
+            border: 1px solid #e9d5ff;
+        }
+
+        .project-description {
+            color: var(--text-body);
+            margin-bottom: auto; /* Pushes tech tags to bottom */
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-tag {
+            background: #eff6ff;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #dbeafe;
+        }
+
+        /* EXPERIENCE SECTION */
+        .experience-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .experience-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-company {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .experience-date {
+            background: var(--bg-alt);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .experience-list {
+            list-style: none;
+            color: var(--text-body);
+        }
+
+        .experience-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .experience-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* CONTACT SECTION */
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-item span:first-child {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: #eff6ff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .contact-item span, .contact-item a {
+            color: var(--text-body);
+            font-weight: 500;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: var(--bg-body);
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6); /* Darker backdrop for focus */
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: #f1f5f9;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .modal h2 {
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-size: 1.75rem;
+        }
+
+        .modal h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-size: 1.2rem;
+        }
+
+        .modal ul {
+            margin-left: 1.5rem;
+            color: var(--text-body);
+        }
+
+        .modal li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-content { grid-template-columns: 1fr; gap: 2rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .experience-header { flex-direction: column; gap: 0.5rem; }
+            .modal-content { padding: 1.5rem; }
+            .contact-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Russel Jr. B. Cagunot</h1>
+            <p class="subtitle">Full Stack & Desktop Application Developer</p>
+            <p class="tagline">Specialized in bridging software and hardware through NFC integration, database optimization, and building end-to-end systems from desktop to cloud.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a Full Stack and Desktop Application Developer with a BS in Computer Engineering from Pamantasan ng Lungsod ng Maynila (PLM), graduated October 2025.</p>
+                    <p>My expertise lies in creating complete systems that integrate hardware devices like NFC readers, barcode scanners, and POS printers with robust software solutions. I've developed everything from attendance tracking systems to loyalty programs, each tailored to solve real business challenges.</p>
+                    <p>I specialize in database normalization, event-driven architecture, and creating intuitive user interfaces that make complex systems accessible to end users.</p>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Languages & Frameworks</h3>
+                        <ul>
+                            <li>PHP & JavaScript</li>
+                            <li>VB.NET</li>
+                            <li>HTML5 & CSS3</li>
+                            <li>Python</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Database & Servers</h3>
+                        <ul>
+                            <li>MySQL & SQLite</li>
+                            <li>WampServer & XAMPP</li>
+                            <li>cPanel/Cloud Hosting</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Hardware Integration</h3>
+                        <ul>
+                            <li>NFC Readers (ACR122U)</li>
+                            <li>Barcode/QR Scanners</li>
+                            <li>POS Printers</li>
+                            <li>Magnetic Stripe Readers</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Core Competencies</h3>
+                        <ul>
+                            <li>Database Normalization</li>
+                            <li>API Integration</li>
+                            <li>UI/UX Design</li>
+                            <li>System Architecture</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="experience-title">Junior Program Developer</h3>
+                        <p class="experience-company">NDAS Phils. Inc., Makati City</p>
+                    </div>
+                    <span class="experience-date">April 2025 – November 2025</span>
+                </div>
+                <ul class="experience-list">
+                    <li>Developed and maintained web-based systems using PHP and JavaScript, creating role-based access dashboards for admins and users</li>
+                    <li>Designed Windows desktop applications using VB.NET with event-driven architecture and offline/online database syncing</li>
+                    <li>Successfully integrated external devices including ACR122U NFC readers, magnetic stripe readers, and Argox receipt printers</li>
+                    <li>Built NFC writer system to program NDEF URL links into NFC cards for streamlined data entry</li>
+                    <li>Developed verification system for X-deal negotiation with QR code scanning for real-time attendance tracking</li>
+                    <li>Designed normalized database schemas, triggers, and stored procedures with migration and backup management</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">I'm always interested in new opportunities and collaborations. Feel free to reach out!</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <a href="mailto:cagunot.jr13@gmail.com">cagunot.jr13@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>0927-185-4009 / 0993-298-1674</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>819 Mercado St. Dagupan Tondo Manila</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Russel Jr. B. Cagunot. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">BS Computer Engineering • PLM Graduate 2025</p>
+    </footer>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                title: "NDAS NFC Tool",
+                status: "done",
+                description: "Desktop application for NFC card encoding and QR code generation with batch processing capabilities.",
+                fullDescription: "The NDAS NFC Tool is a comprehensive desktop application designed for business use, handling NFC card encoding and QR code generation. It supports both singular and batch encoding modes, utilizing Excel imports for high-volume operations.",
+                tech: ["VB.NET", "NFC", "QR Code", "Excel Integration"],
+                features: [
+                    "NFC encoding in Singular and Batch modes",
+                    "NFC reading and data retrieval",
+                    "Excel file import for batch operations",
+                    "vCard QR code generation with full contact details",
+                    "Web URL QR code generation",
+                    "Real-time encoding status and validation",
+                    "USB NFC reader/writer device support"
+                ]
+            },
+            {
+                title: "VeriPassServer (LDR-Event)",
+                status: "done",
+                description: "Real-time event management and participant verification system with QR scanner integration.",
+                fullDescription: "A dedicated desktop application for real-time event management developed in collaboration with NDAS Phils. Inc. and LDR Events Solutions. The system provides fast and reliable verification of participant credentials with color-coded status tracking.",
+                tech: ["Desktop App", "QR Scanner", "Real-time Tracking"],
+                features: [
+                    "Server-oriented architecture",
+                    "QR scanner verification system",
+                    "Color-coded participant tracking (green/yellow/white)",
+                    "Walk-in registration support",
+                    "Import/Export Excel data",
+                    "Real-time attendance metrics",
+                    "Comprehensive reporting capabilities",
+                    "Screen optimization for multiple resolutions"
+                ]
+            },
+            {
+                title: "Employee Attendance System",
+                status: "done",
+                description: "Cloud-based employee management system with NFC verification, comprehensive reporting, and mobile notifications.",
+                fullDescription: "A complete enterprise employee management system with separate modules for guards, administrators, and managers. The system supports NFC-based verification, real-time monitoring, and comprehensive reporting.",
+                tech: ["Cloud-Based", "NFC", "Mobile App", "Reporting"],
+                features: [
+                    "NFC card-based employee verification",
+                    "Visual employee verification with photo display",
+                    "Admin dashboard with active/banned records",
+                    "Employee profile and status management",
+                    "Mobile push notifications for managers",
+                    "Role-based access control (Manager, HR, Supervisors)",
+                    "Comprehensive salary and attendance reports",
+                    "Real-time login monitoring"
+                ]
+            },
+            {
+                title: "Slimmers World Management System",
+                status: "ongoing",
+                description: "Cloud-based fitness membership management with NFC check-in, multi-branch support, and comprehensive reporting.",
+                fullDescription: "A sophisticated cloud-based membership management system using cPanel-hosted databases. Integrates web and tablet applications for real-time member data entry and monitoring across multiple branches.",
+                tech: ["Cloud", "NFC", "cPanel", "Multi-branch"],
+                features: [
+                    "NFC-based member check-in via tablets",
+                    "Program selection: Gym, Skin, Body, Class",
+                    "Role-based access (Receptionist, Accounting, Branch Admin, Admin)",
+                    "Real-time attendance tracking and reporting",
+                    "Member and employee registration",
+                    "Class scheduling and calendar management",
+                    "Payment processing (Cash, GCash, Card)",
+                    "HQ-level aggregated data and analytics",
+                    "Email notification system",
+                    "Commission tracking module"
+                ]
+            },
+            {
+                title: "Queueing System",
+                status: "ongoing",
+                description: "Desktop queueing system for service-oriented environments with automatic window assignment and priority handling.",
+                fullDescription: "A localhost-based desktop application designed to manage customer flow efficiently in service environments. Supports multiple service windows with automatic assignment and priority customer routing.",
+                tech: ["Desktop", "Database", "Real-time"],
+                features: [
+                    "Automatic queue number generation",
+                    "Multiple service windows (default: 4)",
+                    "Priority customer handling (dedicated Window 4)",
+                    "Automatic window assignment",
+                    "Digital display for queue monitoring",
+                    "Database logging for auditing",
+                    "Real-time queue status tracking",
+                    "Planned: Analytics and customizable priority rules"
+                ]
+            },
+            {
+                title: "Student Management System",
+                status: "ongoing",
+                description: "Comprehensive academic management system with role-based portals for students, teachers, admins, and department heads.",
+                fullDescription: "A PHP-based web application with MySQL database designed to streamline academic and administrative processes. Implements robust user authentication and role-based access control for multiple user groups.",
+                tech: ["PHP", "MySQL", "cPanel", "Web App"],
+                features: [
+                    "Admission portal with SHS strand-based filtering",
+                    "Automatic section assignment (45-student capacity)",
+                    "Student enrollment and curriculum tracking",
+                    "Grade management for teachers",
+                    "Certificate of Registration (COR) generation",
+                    "Multi-level administrative dashboards",
+                    "Dean and Chairperson college/course oversight",
+                    "Comprehensive reporting and analytics",
+                    "Batch processing capabilities"
+                ]
+            },
+            {
+                title: "School Library System",
+                status: "ongoing",
+                description: "Local server library management system with borrowing/returning, penalty calculation, and comprehensive reporting.",
+                fullDescription: "A VB.NET desktop application with MySQL on WampServer for complete library operations management. Features separate modules for staff and administrators with extensive reporting capabilities.",
+                tech: ["VB.NET", "MySQL", "WampServer", "Barcode/QR"],
+                features: [
+                    "Student and faculty registration with code generation",
+                    "Book management with image capture",
+                    "Borrowing and return transaction processing",
+                    "Automatic penalty calculation",
+                    "Lost book tracking and management",
+                    "Calendar scheduling module",
+                    "Department and location management",
+                    "Comprehensive reporting (inventory, overdue, aging)",
+                    "User account and security management"
+                ]
+            },
+            {
+                title: "Loyalty Point System",
+                status: "ongoing",
+                description: "NFC-based customer loyalty program with automatic point calculation and redemption tracking.",
+                fullDescription: "A localhost-based desktop application for managing customer rewards through NFC technology. Provides secure, efficient automation of loyalty programs with real-time point tracking.",
+                tech: ["Desktop", "NFC", "Point System"],
+                features: [
+                    "Member and card registration with validation",
+                    "NFC checkout with automatic authentication",
+                    "Real-time point calculation and crediting",
+                    "Promotions management (point multipliers, events)",
+                    "Points redemption system",
+                    "Access control and security rights",
+                    "Comprehensive reporting (daily, weekly, monthly)",
+                    "Customizable based on client requirements"
+                ]
+            },
+            {
+                title: "Code Generator System",
+                status: "pending",
+                description: "Alphanumeric code generation system for vouchers and cards with denomination-based tracking and API support.",
+                fullDescription: "A localhost backend application for generating and managing unique codes for physical cards and e-vouchers. Supports configurable usage types and includes comprehensive tracking and reporting.",
+                tech: ["Desktop", "API", "Backend"],
+                features: [
+                    "6-character alphanumeric code auto-generation",
+                    "Multiple denominations (50, 100, 200)",
+                    "Configurable usage types (one-time/multi-use)",
+                    "Sequential serial number tracking",
+                    "Real-time status monitoring (active/expired)",
+                    "Excel export functionality",
+                    "Admin reporting with filtering options",
+                    "User account management",
+                    "API integration support"
+                ]
+            },
+            {
+                title: "Calling Card NFC System",
+                status: "pending",
+                description: "Web-based NFC business card platform with personalized dashboards and mobile-friendly interface.",
+                fullDescription: "A PHP/MySQL web platform for managing NFC MiFare cards. Features admin module with VB.NET for NFC reader integration and mobile-optimized user dashboards accessed via NFC tap.",
+                tech: ["PHP", "MySQL", "VB.NET", "NFC", "cPanel"],
+                features: [
+                    "Admin module with NFC reader integration",
+                    "NDEF URL writing to NFC cards",
+                    "Mobile-optimized portrait dashboard",
+                    "Personalized user profiles with social media",
+                    "Company information management",
+                    "Product showcase with image gallery",
+                    "Interactive map integration",
+                    "Automatic credential generation via SMTP",
+                    "Secure account management"
+                ]
+            }
+        ];
+
+        function createProjectCards() {
+            const grid = document.querySelector('.projects-grid');
+            projects.forEach((project, index) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.onclick = () => openModal(index);
+                
+                const statusClass = `status-${project.status}`;
+                
+                card.innerHTML = `
+                    <div class="project-header">
+                        <h3 class="project-title">${project.title}</h3>
+                        <span class="project-status ${statusClass}">${project.status}</span>
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tech">
+                        ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(index) {
+            const project = projects[index];
+            const modal = document.getElementById('projectModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h2>${project.title}</h2>
+                <span class="project-status status-${project.status}" style="display: inline-block; margin-bottom: 1rem;">${project.status}</span>
+                <p style="color: var(--text-body); margin-bottom: 1.5rem; line-height: 1.8;">${project.fullDescription}</p>
+                
+                <h3>Key Features:</h3>
+                <ul>
+                    ${project.features.map(f => `<li>${f}</li>`).join('')}
+                </ul>
+                
+                <h3>Technologies:</h3>
+                <div class="project-tech" style="margin-top: 1rem;">
+                    ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('projectModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize project cards when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createProjectCards();
+        });
+
+        // Add scroll animation for sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
